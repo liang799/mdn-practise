@@ -19,11 +19,19 @@ function spin(aliceNum, callback) {
 }
 
 /* Callback Hell */
-spin(alice1, () => 
-  spin(alice2, () => 
-    alice3.animate(aliceTumbling, aliceTiming)
-  )
-);
+// spin(alice1, () => 
+//   spin(alice2, () => 
+//     alice3.animate(aliceTumbling, aliceTiming)
+//   )
+// );
+
+/* Promise version of callback hell */
+alice1.animate(aliceTumbling, aliceTiming).finished
+  .then(() => {
+    alice2.animate(aliceTumbling, aliceTiming).finished 
+      .then(() => alice3.animate(aliceTumbling, aliceTiming).finished)
+  })
+
 
 /* Promise Chain */
 // alice1.animate(aliceTumbling, aliceTiming).finished
