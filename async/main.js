@@ -19,10 +19,29 @@ function spin(aliceNum, callback) {
 }
 
 /* Callback Hell */
-spin(alice1, spin(alice2, () => alice3.animate(aliceTumbling, aliceTiming)))
+// spin(alice1, spin(alice2, () => alice3.animate(aliceTumbling, aliceTiming)))
 
+/* Callback Hell Part 2 Not working*/
+// spin(alice1, setTimeout(
+//   spin(alice2, setTimeout(() =>
+//     alice3.animate(aliceTumbling, aliceTiming)
+//   ), 2000)
+// ), 2000)
 
-/* Nesting Hell */
+function spinAlice(aliceNum, delay) {
+  if (delay === undefined) {
+    delay = 1;
+  }
 
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(aliceNum.animate(aliceTumbling, aliceTiming));
+    }, delay);
+  });
+}
 
-
+/* Promises */
+spinAlice(alice1)
+  .then(spinAlice(alice2, 2000))
+  .then(spinAlice(alice3, 2000))
+  .catch((error) => console.log(error));
