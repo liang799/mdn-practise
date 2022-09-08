@@ -28,20 +28,15 @@ function spin(aliceNum, callback) {
 //   ), 2000)
 // ), 2000)
 
-function spinAlice(aliceNum, delay) {
-  if (delay === undefined) {
-    delay = 1;
-  }
-
+function spinAlice(aliceNum) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(aliceNum.animate(aliceTumbling, aliceTiming));
-    }, delay);
-  });
+    animated = aliceNum.animate(aliceTumbling, aliceTiming);
+    resolve(animated.finished);
+  })
 }
 
-/* Promises */
+/* Promise Chain */
 spinAlice(alice1)
-  .then(spinAlice(alice2, 2000))
-  .then(spinAlice(alice3, 2000))
+  .then(spinAlice(alice2))
+  .then(spinAlice(alice3))
   .catch((error) => console.log(error));
