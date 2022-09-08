@@ -26,11 +26,11 @@ function spin(aliceNum, callback) {
 // );
 
 /* Promise version of callback hell */
-alice1.animate(aliceTumbling, aliceTiming).finished
-  .then(() => {
-    alice2.animate(aliceTumbling, aliceTiming).finished 
-      .then(() => alice3.animate(aliceTumbling, aliceTiming).finished)
-  })
+// alice1.animate(aliceTumbling, aliceTiming).finished
+//   .then(() => {
+//     alice2.animate(aliceTumbling, aliceTiming).finished 
+//       .then(() => alice3.animate(aliceTumbling, aliceTiming).finished)
+//   })
 
 
 /* Promise Chain */
@@ -41,15 +41,10 @@ alice1.animate(aliceTumbling, aliceTiming).finished
 
 
 /* Async and await */
-async function spinAlice(aliceNum) {
-  const status = await aliceNum.animate(aliceTumbling, aliceTiming).finished;
-  if (status) {
-    console.log("Spin, sugar, spin");
-  } else {
-    console.log("Error");
-  }
+async function spinAlices() {
+  await alice1.animate(aliceTumbling, aliceTiming).finished
+  await alice2.animate(aliceTumbling, aliceTiming).finished
+  await alice3.animate(aliceTumbling, aliceTiming).finished
 }
 
-// spinAlice(alice1);
-// spinAlice(alice2);
-// spinAlice(alice3);
+spinAlices();
