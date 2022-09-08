@@ -28,15 +28,8 @@ function spin(aliceNum, callback) {
 //   ), 2000)
 // ), 2000)
 
-function spinAlice(aliceNum) {
-  return new Promise((resolve, reject) => {
-    animated = aliceNum.animate(aliceTumbling, aliceTiming);
-    resolve(animated.finished);
-  })
-}
-
 /* Promise Chain */
-spinAlice(alice1)
-  .then(spinAlice(alice2))
-  .then(spinAlice(alice3))
+alice1.animate(aliceTumbling, aliceTiming).finished
+  .then(() => alice2.animate(aliceTumbling, aliceTiming).finished)
+  .then(() => alice3.animate(aliceTumbling, aliceTiming).finished)
   .catch((error) => console.log(error));
