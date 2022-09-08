@@ -15,21 +15,33 @@ const alice3 = document.querySelector("#alice3");
 
 function spin(aliceNum, callback) {
   const animated = aliceNum.animate(aliceTumbling, aliceTiming);
-  callback(animated);
+  callback();
 }
 
 /* Callback Hell */
-// spin(alice1, spin(alice2, () => alice3.animate(aliceTumbling, aliceTiming)))
-
-/* Callback Hell Part 2 Not working*/
-// spin(alice1, setTimeout(
-//   spin(alice2, setTimeout(() =>
-//     alice3.animate(aliceTumbling, aliceTiming)
-//   ), 2000)
-// ), 2000)
+spin(alice1, () => 
+  spin(alice2, () => 
+    alice3.animate(aliceTumbling, aliceTiming)
+  )
+);
 
 /* Promise Chain */
-alice1.animate(aliceTumbling, aliceTiming).finished
-  .then(() => alice2.animate(aliceTumbling, aliceTiming).finished)
-  .then(() => alice3.animate(aliceTumbling, aliceTiming).finished)
-  .catch((error) => console.log(error));
+// alice1.animate(aliceTumbling, aliceTiming).finished
+//   .then(() => alice2.animate(aliceTumbling, aliceTiming).finished)
+//   .then(() => alice3.animate(aliceTumbling, aliceTiming).finished)
+//   .catch((error) => console.log(error));
+
+
+/* Async and await */
+async function spinAlice(aliceNum) {
+  const status = await aliceNum.animate(aliceTumbling, aliceTiming).finished;
+  if (status) {
+    console.log("Spin, sugar, spin");
+  } else {
+    console.log("Error");
+  }
+}
+
+// spinAlice(alice1);
+// spinAlice(alice2);
+// spinAlice(alice3);
